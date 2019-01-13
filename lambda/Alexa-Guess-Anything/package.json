@@ -4,7 +4,8 @@
   "description": "AWS Lambda function, Alexa skill: Alexa-Guess-Anything",
   "main": "index.js",
   "dependencies": {
-    "ask-sdk": "^2.3.0"
+    "ask-sdk-core": "^2.0.0",
+    "ask-sdk-model": "^1.0.0"
   },
   "devDependencies": {},
   "scripts": {
