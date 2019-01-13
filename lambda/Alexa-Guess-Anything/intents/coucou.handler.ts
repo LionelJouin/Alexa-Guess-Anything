@@ -1,5 +1,4 @@
 import { RequestHandler } from "ask-sdk-core";
-import { IntentTypes } from ".";
 
 export const CoucouHandler: RequestHandler = {
     canHandle(handlerInput) {
