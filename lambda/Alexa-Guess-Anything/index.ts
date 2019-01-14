@@ -1,11 +1,20 @@
 import * as Alexa from "ask-sdk-core";
 import * as Intent from "./intents"
+import * as Errors from "./errors";
 
 export const handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
-        Intent.CoucouHandler
+        new Intent.LaunchRequestHandler(),
+        new Intent.SessionEndedRequestHandler(),
+        new Intent.HelpIntentHandler(),
+        new Intent.ExitIntentHandler(),
+
+        new Intent.TestIntentHandler(),
+        new Intent.AbcIntentHandler()
     )
     .addErrorHandlers(
+        new Errors.Unknown(),
+        new Errors.Unexpected()
     )
     .addRequestInterceptors(
     )
