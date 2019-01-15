@@ -5,3 +5,4 @@ export * from "./build-in/exit.handler";
 
 export * from "./testIntent.handler";
 export * from "./abcIntent.handler";
+export * from "./answerIntent.handler";

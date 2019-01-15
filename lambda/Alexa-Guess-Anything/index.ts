@@ -10,7 +10,8 @@ export const handler = Alexa.SkillBuilders.custom()
         new Intent.ExitIntentHandler(),
 
         new Intent.TestIntentHandler(),
-        new Intent.AbcIntentHandler()
+        new Intent.AbcIntentHandler(),
+        new Intent.AnswerIntentHandler()
     )
     .addErrorHandlers(
         new Errors.Unknown(),

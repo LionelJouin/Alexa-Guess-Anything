@@ -8,6 +8,7 @@
     "ask-sdk-model": "^1.0.0"
   },
   "devDependencies": {
+    "@types/node": "^10.12.18",
     "gulp": "^4.0.0",
     "gulp-typescript": "^5.0.0",
     "rimraf": "^2.6.3",
