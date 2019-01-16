@@ -5,9 +5,13 @@
   "main": "index.js",
   "dependencies": {
     "ask-sdk-core": "^2.0.0",
-    "ask-sdk-model": "^1.0.0"
+    "ask-sdk-model": "^1.0.0",
+    "i18next": "^13.1.2",
+    "i18next-sprintf-postprocessor": "^0.2.2"
   },
   "devDependencies": {
+    "@types/i18next": "^12.1.0",
+    "@types/i18next-sprintf-postprocessor": "0.0.29",
     "@types/node": "^10.12.18",
     "gulp": "^4.0.0",
     "gulp-typescript": "^5.0.0",

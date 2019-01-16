@@ -11,13 +11,21 @@ export class AnswerIntentHandler implements RequestHandler {
 
     public handle(handlerInput: HandlerInput): Response {
         const request = handlerInput.requestEnvelope.request as IntentRequest;
-        // if (request.type === 'IntentRequest' && request.intent.slots !== undefined) {
-        //     var answer = request.intent.slots.answer.value;
-        // }
-        var answer = request.intent.slots!.answer.value;
-        console.log(answer);
-        // const speechText = "La reponse est ";
-        const speechText = "La reponse est " + answer;
+        const attributes = handlerInput.attributesManager.getSessionAttributes();
+
+        var answer = +request.intent.slots!.answer.value;
+
+        var speechText = "";
+
+        if (answer < attributes.expectedAnswer) {
+            speechText = "C'est plus !";
+            attributes.counter++;
+        } else if (answer > attributes.expectedAnswer) {
+            speechText = "C'est moins !";
+            attributes.counter++;
+        } else {
+            speechText = "bien ouej, vous avez " + attributes.counter;
+        }
 
         return handlerInput.responseBuilder
             .speak(speechText)

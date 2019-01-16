@@ -1,6 +1,7 @@
 import * as Alexa from "ask-sdk-core";
 import * as Intent from "./intents"
 import * as Errors from "./errors";
+import * as Interceptors from "./interceptors";
 
 export const handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
@@ -18,5 +19,6 @@ export const handler = Alexa.SkillBuilders.custom()
         new Errors.Unexpected()
     )
     .addRequestInterceptors(
+        new Interceptors.Localization()
     )
     .lambda();

@@ -4,6 +4,7 @@ import { Response } from "ask-sdk-model";
 export class Unknown implements ErrorHandler {
 
     public canHandle(_: HandlerInput, error: Error): boolean {
+        console.log(error);
         return true;
         // return error.name === "UnknownError";
     }
