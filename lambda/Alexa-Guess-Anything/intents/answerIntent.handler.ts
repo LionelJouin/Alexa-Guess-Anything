@@ -1,5 +1,6 @@
 import { HandlerInput, RequestHandler } from "ask-sdk-core";
 import { Response, IntentRequest } from "ask-sdk-model";
+import { Game } from "../models/game";
 
 export class AnswerIntentHandler implements RequestHandler {
 
@@ -10,22 +11,12 @@ export class AnswerIntentHandler implements RequestHandler {
     }
 
     public handle(handlerInput: HandlerInput): Response {
+        const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
         const request = handlerInput.requestEnvelope.request as IntentRequest;
-        const attributes = handlerInput.attributesManager.getSessionAttributes();
 
-        var answer = +request.intent.slots!.answer.value;
-
-        var speechText = "";
-
-        if (answer < attributes.expectedAnswer) {
-            speechText = "C'est plus !";
-            attributes.counter++;
-        } else if (answer > attributes.expectedAnswer) {
-            speechText = "C'est moins !";
-            attributes.counter++;
-        } else {
-            speechText = "bien ouej, vous avez " + attributes.counter;
-        }
+        var answer: number = +request.intent.slots!.answer.value;
+        const game: Game = requestAttributes.game as Game;
+        const speechText = game.tryToSpeechText(answer, requestAttributes);
 
         return handlerInput.responseBuilder
             .speak(speechText)
