@@ -1,7 +1,7 @@
 import { RequestInterceptor, HandlerInput } from "ask-sdk-core";
 import { default as i18next } from 'i18next';
 import * as sprintf from "i18next-sprintf-postprocessor";
-import * as locales from "../utils/locales"
+import { locales } from "../utils/locales"
 
 export class Localization implements RequestInterceptor {
 
