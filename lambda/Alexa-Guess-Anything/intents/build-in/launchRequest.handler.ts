@@ -14,9 +14,9 @@ export class LaunchRequestHandler implements RequestHandler {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
         const attributes = handlerInput.attributesManager.getSessionAttributes();
         
-        const speechText = requestAttributes.t("TEST");
-        attributes.counter = 0;
-        attributes.expectedAnswer = 100;
+        const speechText = requestAttributes.t("WELCOME_MESSAGE");
+        // attributes.counter = 0;
+        // attributes.expectedAnswer = 100;
 
         return handlerInput.responseBuilder
             .speak(speechText)

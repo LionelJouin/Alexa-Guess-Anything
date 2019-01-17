@@ -6,11 +6,16 @@ export class Question {
 
     public constructor() {
         this.itemToGuess = "Tour Effeil";
-        this.numberToGuess = 0;
+        this.numberToGuess = 100;
     }
 
-    public try(n: number): number {
-        return this.numberToGuess - n;
+    public guess(n: number): number {
+        return n - this.numberToGuess;
+    }
+
+    public copy(question: Question): void {
+        this.itemToGuess = question.itemToGuess;
+        this.numberToGuess = question.numberToGuess;
     }
 
 }

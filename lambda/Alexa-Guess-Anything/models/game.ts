@@ -28,8 +28,8 @@ export class Game {
         return this.currentQuestion;
     }
 
-    private tryToGuess(n: number): number {
-        const result = this.currentQuestion.try(n);
+    private guess(n: number): number {
+        const result = this.currentQuestion.guess(n);
 
         if (result != 0) {
             this.currentPlayer = (this.currentPlayer + 1) % this.numberOfPlayer;
@@ -42,27 +42,35 @@ export class Game {
         return 0;
     }
 
-    public tryToSpeechText(n: number, requestAttributes: any): string {
-        var text: string = "";
-        const r: number = this.tryToGuess(n);
+    public guessToSpeechText(n: number, requestAttributes: any): string {
+        var speechText: string = "";
+        const guessResult: number = this.guess(n);
 
-        if (r < 0)
-            text += requestAttributes.t("MORE");
-        else if (r > 0)
-            text += requestAttributes.t("LESS");
+        if (guessResult < 0)
+            speechText += requestAttributes.t("MORE");
+        else if (guessResult > 0)
+            speechText += requestAttributes.t("LESS");
         else {
-            text += requestAttributes.t("GOOD");
+            speechText += requestAttributes.t("GOOD");
             if (this.numberOfRounds == 0)
-                text += ", " + this.questionToSpeechText(requestAttributes);
+                speechText += ", " + this.questionToSpeechText(requestAttributes);
             else
-                text += "Fin, points: " + this.points[this.currentPlayer];
+                speechText += ", Fin, points: " + this.points[this.currentPlayer];
         }
 
-        return text;
+        return speechText;
     }
 
     public questionToSpeechText(requestAttributes: any): string {
         return "Quel est la taille de " + this.getCurrentQuestion().itemToGuess + " ?";
+    }
+
+    public copy(game: Game) {
+        this.points = game.points;
+        this.numberOfRounds = game.numberOfRounds;
+        this.numberOfPlayer = game.numberOfPlayer;
+        this.currentPlayer = game.currentPlayer;
+        this.currentQuestion.copy(game.currentQuestion);
     }
 
 }

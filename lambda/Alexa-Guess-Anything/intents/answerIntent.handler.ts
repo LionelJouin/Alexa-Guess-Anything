@@ -12,11 +12,14 @@ export class AnswerIntentHandler implements RequestHandler {
 
     public handle(handlerInput: HandlerInput): Response {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+        const SessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         const request = handlerInput.requestEnvelope.request as IntentRequest;
 
         var answer: number = +request.intent.slots!.answer.value;
-        const game: Game = requestAttributes.game as Game;
-        const speechText = game.tryToSpeechText(answer, requestAttributes);
+        const game: Game = new Game();
+        game.copy(SessionAttributes.game as Game);
+        
+        const speechText = game.guessToSpeechText(answer, requestAttributes);
 
         return handlerInput.responseBuilder
             .speak(speechText)
