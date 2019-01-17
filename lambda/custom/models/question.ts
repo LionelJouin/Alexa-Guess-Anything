@@ -5,7 +5,7 @@ export class Question {
     private numberToGuess: number;
 
     public constructor() {
-        this.itemToGuess = "Tour Effeil";
+        this.itemToGuess = "Tour Eiffel";
         this.numberToGuess = 100;
     }
 

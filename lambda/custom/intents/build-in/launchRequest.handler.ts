@@ -5,7 +5,6 @@ export class LaunchRequestHandler implements RequestHandler {
 
     public canHandle(handlerInput: HandlerInput): boolean {
         const request = handlerInput.requestEnvelope.request;
-        // const word = data.name;
         return request.type === 'LaunchRequest';
     }
 
