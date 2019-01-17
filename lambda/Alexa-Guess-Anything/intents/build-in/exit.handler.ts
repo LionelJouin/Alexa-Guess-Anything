@@ -10,7 +10,8 @@ export class ExitIntentHandler implements RequestHandler {
     }
 
     public handle(handlerInput: HandlerInput): Response {
-        const speechText = "exit";
+        const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+        const speechText = requestAttributes.t("EXIT");
 
         return handlerInput.responseBuilder
             .speak(speechText)

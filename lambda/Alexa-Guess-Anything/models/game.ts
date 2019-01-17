@@ -43,6 +43,9 @@ export class Game {
     }
 
     public guessToSpeechText(n: number, requestAttributes: any): string {
+        if (n === NaN || n === undefined || n === null)
+            return "Erreur";
+            
         var speechText: string = "";
         const guessResult: number = this.guess(n);
 

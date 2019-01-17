@@ -9,9 +9,7 @@ export const handler = Alexa.SkillBuilders.custom()
         new Intent.SessionEndedRequestHandler(),
         new Intent.HelpIntentHandler(),
         new Intent.ExitIntentHandler(),
-
-        new Intent.TestIntentHandler(),
-        new Intent.AbcIntentHandler(),
+        
         new Intent.StartIntentHandler(),
         new Intent.AnswerIntentHandler()
     )

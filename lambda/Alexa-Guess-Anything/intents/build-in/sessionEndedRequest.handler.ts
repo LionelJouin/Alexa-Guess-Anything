@@ -9,8 +9,7 @@ export class SessionEndedRequestHandler implements RequestHandler {
     }
 
     public handle(handlerInput: HandlerInput): Response {
-        return handlerInput.responseBuilder
-            .getResponse();
+        return handlerInput.responseBuilder.getResponse();
     }
 
 };

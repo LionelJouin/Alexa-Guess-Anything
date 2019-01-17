@@ -10,7 +10,8 @@ export class HelpIntentHandler implements RequestHandler {
     }
 
     public handle(handlerInput: HandlerInput): Response {
-        const speechText = "help";
+        const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+        const speechText = requestAttributes.t("HELP");
 
         return handlerInput.responseBuilder
             .speak(speechText)
