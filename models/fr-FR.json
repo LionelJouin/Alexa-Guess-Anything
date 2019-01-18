@@ -1,0 +1,48 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "guess anything",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AnswerIntent",
+                    "slots": [
+                        {
+                            "name": "answer",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "La reponse est {answer}",
+                        "{answer}"
+                    ]
+                },
+                {
+                    "name": "StartIntent",
+                    "slots": [],
+                    "samples": [
+                        "Commencer le quiz",
+                        "Commencer la partie",
+                        "Commencer"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}
