@@ -18,6 +18,7 @@ export class AnswerIntentHandler implements RequestHandler {
         var answer: number = +request.intent.slots!.answer.value;
         const game: Game = new Game();
         game.copy(SessionAttributes.game as Game);
+        SessionAttributes.game = game;
         
         const speechText = game.guessToSpeechText(answer, requestAttributes);
 

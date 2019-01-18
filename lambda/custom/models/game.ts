@@ -45,7 +45,7 @@ export class Game {
     public guessToSpeechText(n: number, requestAttributes: any): string {
         if (n === NaN || n === undefined || n === null)
             return "Erreur";
-            
+
         var speechText: string = "";
         const guessResult: number = this.guess(n);
 
@@ -55,7 +55,7 @@ export class Game {
             speechText += requestAttributes.t("LESS");
         else {
             speechText += requestAttributes.t("GOOD");
-            if (this.numberOfRounds == 0)
+            if (this.numberOfRounds > 0)
                 speechText += ", " + this.questionToSpeechText(requestAttributes);
             else
                 speechText += ", Fin, points: " + this.points[this.currentPlayer];
@@ -65,7 +65,7 @@ export class Game {
     }
 
     public questionToSpeechText(requestAttributes: any): string {
-        return "Quel est la taille de " + this.getCurrentQuestion().itemToGuess + " ?";
+        return this.getCurrentQuestion().toSpeechText(requestAttributes);
     }
 
     public copy(game: Game) {
