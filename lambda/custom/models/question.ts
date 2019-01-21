@@ -1,3 +1,4 @@
+import * as questions from "../utils/questions"
 
 export class Question {
 
@@ -7,10 +8,17 @@ export class Question {
     private numberToGuess: number;
 
     public constructor() {
-        this.itemToGuess = "de la Tour Eiffel";
-        this.unitSystem = "la taille";
-        this.unit = "mètre";
-        this.numberToGuess = 100;
+        const randomQuestion = this.generate();
+        this.itemToGuess = randomQuestion.itemToGuess;
+        this.unitSystem = randomQuestion.unitSystem;
+        this.unit = randomQuestion.unit;
+        this.numberToGuess = randomQuestion.numberToGuess;
+    }
+
+    private generate(): any {
+        const max: number = questions.questions["fr-FR"].length;
+        const randomNumber: number = Math.floor(Math.random() * max);
+        return questions.questions["fr-FR"][randomNumber];
     }
 
     public guess(n: number): number {
@@ -18,7 +26,10 @@ export class Question {
     }
 
     public toSpeechText(requestAttributes: any): string {
-        return requestAttributes.t("WHAT_IS") + this.unitSystem + ", " + this.unit + ", " + this.itemToGuess + "?";
+        var unit: string = "";
+        if (this.unit !== undefined || this.unit !== "")
+            unit = + ", " + this.unit;
+        return requestAttributes.t("WHAT_IS") + this.unitSystem + unit + ", " + this.itemToGuess + "?";
     }
 
     public copy(question: Question): void {
