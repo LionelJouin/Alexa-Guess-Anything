@@ -56,11 +56,37 @@ export class Game {
         else {
             speechText += requestAttributes.t("GOOD");
             if (this.numberOfRounds > 0)
-                speechText += ", " + this.questionToSpeechText(requestAttributes);
+                speechText += " " + requestAttributes.t("NEXT_QUESTION") + " " + this.questionToSpeechText(requestAttributes);
             else
-                speechText += ", Fin, points: " + this.points[this.currentPlayer];
+                speechText += " " + requestAttributes.t("IT_S_FINISHED") + this.resultToSpeechText(requestAttributes);
         }
 
+        return speechText;
+    }
+
+    private resultToSpeechText(requestAttributes: any): string {
+        var speechText: string = "";
+        if (this.numberOfPlayer > 1) {
+            speechText += requestAttributes.t("YOU_MADE") + this.points[this.currentPlayer] + " ";
+            if (this.points[this.currentPlayer] <= 1)
+                speechText += requestAttributes.t("POINT");
+            else
+                speechText += requestAttributes.t("POINTS");
+            speechText += ".";
+        } else {
+            var playerNumbers: string[] = [
+                requestAttributes.t("ONE"),
+                requestAttributes.t("TWO"),
+                requestAttributes.t("THREE"),
+                requestAttributes.t("FOUR"),
+            ];
+            var playerPositions: string[] = [
+                requestAttributes.t("FIRST"),
+                requestAttributes.t("SECOND"),
+                requestAttributes.t("THIRD"),
+                requestAttributes.t("FOURTH"),
+            ];
+        }
         return speechText;
     }
 

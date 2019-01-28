@@ -26,10 +26,16 @@ export class Question {
     }
 
     public toSpeechText(requestAttributes: any): string {
+        var unitSystem: string = "";
+        if (this.unitSystem !== undefined || this.unitSystem !== "")
+            unitSystem = this.unitSystem;
         var unit: string = "";
         if (this.unit !== undefined || this.unit !== "")
-            unit = + ", " + this.unit;
-        return requestAttributes.t("WHAT_IS") + this.unitSystem + unit + ", " + this.itemToGuess + "?";
+            unit = ", en " + this.unit;
+        var itemToGuess: string = "";
+        if (this.itemToGuess !== undefined)
+            itemToGuess = ", " + this.itemToGuess;
+        return requestAttributes.t("WHAT_IS") + unitSystem + unit + itemToGuess + "?";
     }
 
     public copy(question: Question): void {
