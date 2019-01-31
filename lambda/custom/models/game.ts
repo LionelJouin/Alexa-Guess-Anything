@@ -1,21 +1,22 @@
 import { Question } from "./question";
+import { Player } from "./player";
 
 export class Game {
 
-    private points: number[];
+    private players: Player[];
     private numberOfRounds: number;
-    private numberOfPlayer: number;
-    private currentPlayer: number;
+    private currentPlayerIndex: number;
     private currentQuestion!: Question;
 
     public constructor() {
         this.numberOfRounds = 2
-        this.currentPlayer = 0;
-        this.numberOfPlayer = 1;
-        this.points = new Array(this.numberOfPlayer);
+        var numberOfPlayer: number = 1;
 
-        for (var i = 0; i < this.numberOfPlayer; i++)
-            this.points[i] = 0;
+        this.players = new Array(numberOfPlayer);
+        for (var i = 0; i < numberOfPlayer; i++)
+            this.players[i] = new Player(i);
+
+        this.currentPlayerIndex = 0;
 
         this.setNewQuestion();
     }
@@ -28,16 +29,29 @@ export class Game {
         return this.currentQuestion;
     }
 
+    private getCurrentPlayer(): Player {
+        return this.players[this.currentPlayerIndex];
+    }
+
+    private nextPlayer(): void {
+        this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.getPlayerCount();
+    }
+
+    private getPlayerCount(): number {
+        return this.players.length;
+    }
+
     private guess(n: number): number {
         const result = this.currentQuestion.guess(n);
 
         if (result != 0) {
-            this.currentPlayer = (this.currentPlayer + 1) % this.numberOfPlayer;
+            this.getCurrentPlayer().addMistake();
+            this.nextPlayer();
             return result;
         }
 
         this.numberOfRounds--;
-        this.points[this.currentPlayer]++;
+        this.getCurrentPlayer().addPoint();
         this.setNewQuestion();
         return 0;
     }
@@ -66,9 +80,9 @@ export class Game {
 
     private resultToSpeechText(requestAttributes: any): string {
         var speechText: string = "";
-        if (this.numberOfPlayer > 1) {
-            speechText += requestAttributes.t("YOU_MADE") + this.points[this.currentPlayer] + " ";
-            if (this.points[this.currentPlayer] <= 1)
+        if (this.getPlayerCount() > 1) {
+            speechText += requestAttributes.t("YOU_MADE") + this.getCurrentPlayer().getPointCount() + " ";
+            if (this.getCurrentPlayer().getPointCount() <= 1)
                 speechText += requestAttributes.t("POINT");
             else
                 speechText += requestAttributes.t("POINTS");
@@ -94,12 +108,13 @@ export class Game {
         return this.getCurrentQuestion().toSpeechText(requestAttributes);
     }
 
-    public copy(game: Game) {
-        this.points = game.points;
+    public copy(game: Game): void {
         this.numberOfRounds = game.numberOfRounds;
-        this.numberOfPlayer = game.numberOfPlayer;
-        this.currentPlayer = game.currentPlayer;
+        this.currentPlayerIndex = game.currentPlayerIndex;
         this.currentQuestion.copy(game.currentQuestion);
+        for (var i = 0; i < this.currentPlayerIndex; i++) {
+            this.players[i].copy(game.players[i]);
+        }
     }
 
 }
