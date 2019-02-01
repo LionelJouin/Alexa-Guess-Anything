@@ -19,6 +19,10 @@ export class Player {
         this.mistakeCount++;
     }
 
+    public getId(): number {
+        return this.id;
+    }
+
     public getPointCount(): number {
         return this.pointCount;
     }

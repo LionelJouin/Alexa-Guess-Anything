@@ -13,6 +13,8 @@ export const fr_FR = {
         POINTS: "points",
         PLAYER: "Joueur",
         YOU_MADE: "vous avez fait",
+        IS: "est",
+        WITH: "avec",
         HAS_MADE: "a fait",
         MISTAKE: "erreur",
         MISTAKES: "erreurs",

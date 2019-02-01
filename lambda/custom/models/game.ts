@@ -72,7 +72,7 @@ export class Game {
             if (this.numberOfRounds > 0)
                 speechText += " " + requestAttributes.t("NEXT_QUESTION") + " " + this.questionToSpeechText(requestAttributes);
             else
-                speechText += " " + requestAttributes.t("IT_S_FINISHED") + this.resultToSpeechText(requestAttributes);
+                speechText += " " + requestAttributes.t("IT_S_FINISHED") + " " + this.resultToSpeechText(requestAttributes);
         }
 
         return speechText;
@@ -80,13 +80,13 @@ export class Game {
 
     private resultToSpeechText(requestAttributes: any): string {
         var speechText: string = "";
-        if (this.getPlayerCount() > 1) {
-            speechText += requestAttributes.t("YOU_MADE") + this.getCurrentPlayer().getPointCount() + " ";
-            if (this.getCurrentPlayer().getPointCount() <= 1)
-                speechText += requestAttributes.t("POINT");
-            else
-                speechText += requestAttributes.t("POINTS");
-            speechText += ".";
+        if (this.getPlayerCount() <= 1) {
+            speechText += requestAttributes.t("YOU_MADE")
+                + " "
+                + this.getCurrentPlayer().getPointCount()
+                + " "
+                + this.getPointSpeechText(this.getCurrentPlayer().getPointCount(), requestAttributes);
+            + ".";
         } else {
             var playerNumbers: string[] = [
                 requestAttributes.t("ONE"),
@@ -100,8 +100,33 @@ export class Game {
                 requestAttributes.t("THIRD"),
                 requestAttributes.t("FOURTH"),
             ];
+            this.players.sort((x, y) => x.getPointCount() - y.getPointCount());
+            for (var i = 0; i < this.getPlayerCount(); i++) {
+                const player = this.players[i];
+                speechText += requestAttributes.t("PLAYER")
+                    + " "
+                    + requestAttributes.t(playerNumbers[player.getId()])
+                    + " "
+                    + requestAttributes.t("IS")
+                    + " "
+                    + requestAttributes.t(playerPositions[i])
+                    + " "
+                    + requestAttributes.t("WITH")
+                    + " "
+                    + player.getPointCount()
+                    + " "
+                    + this.getPointSpeechText(player.getPointCount(), requestAttributes);
+                + ".";
+            }
         }
         return speechText;
+    }
+
+    private getPointSpeechText(point: number, requestAttributes: any): string {
+        if (point <= 1)
+            return requestAttributes.t("POINT");
+        else
+            return requestAttributes.t("POINTS");
     }
 
     public questionToSpeechText(requestAttributes: any): string {
@@ -112,7 +137,7 @@ export class Game {
         this.numberOfRounds = game.numberOfRounds;
         this.currentPlayerIndex = game.currentPlayerIndex;
         this.currentQuestion.copy(game.currentQuestion);
-        for (var i = 0; i < this.currentPlayerIndex; i++) {
+        for (var i = 0; i < game.players.length; i++) {
             this.players[i].copy(game.players[i]);
         }
     }
