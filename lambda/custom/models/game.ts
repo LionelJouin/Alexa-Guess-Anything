@@ -56,6 +56,10 @@ export class Game {
         return 0;
     }
 
+    private isFinished(): boolean {
+        return this.numberOfRounds > 0;
+    }
+
     public guessToSpeechText(n: number, requestAttributes: any): string {
         if (n === NaN || n === undefined || n === null)
             return "Erreur";
@@ -69,10 +73,18 @@ export class Game {
             speechText += requestAttributes.t("LESS");
         else {
             speechText += requestAttributes.t("GOOD");
-            if (this.numberOfRounds > 0)
-                speechText += " " + requestAttributes.t("NEXT_QUESTION") + " " + this.questionToSpeechText(requestAttributes);
-            else
-                speechText += " " + requestAttributes.t("IT_S_FINISHED") + " " + this.resultToSpeechText(requestAttributes);
+            if (this.isFinished()) {
+                speechText += " "
+                    + requestAttributes.t("IT_S_FINISHED")
+                    + " "
+                    + this.resultToSpeechText(requestAttributes);
+            }
+            else {
+                speechText += " " + requestAttributes.t("NEXT_QUESTION");
+                if (this.getPlayerCount() > 1)
+                    speechText += this.currentPlayerToSpeechText(requestAttributes) + ",";
+                speechText += " " + this.questionToSpeechText(requestAttributes);
+            }
         }
 
         return speechText;
@@ -105,11 +117,11 @@ export class Game {
                 const player = this.players[i];
                 speechText += requestAttributes.t("PLAYER")
                     + " "
-                    + requestAttributes.t(playerNumbers[player.getId()])
+                    + playerNumbers[player.getId()]
                     + " "
                     + requestAttributes.t("IS")
                     + " "
-                    + requestAttributes.t(playerPositions[i])
+                    + playerPositions[i]
                     + " "
                     + requestAttributes.t("WITH")
                     + " "
@@ -127,6 +139,20 @@ export class Game {
             return requestAttributes.t("POINT");
         else
             return requestAttributes.t("POINTS");
+    }
+
+    private currentPlayerToSpeechText(requestAttributes: any) {
+        var speechText = "";
+        var playerNumbers: string[] = [
+            requestAttributes.t("ONE"),
+            requestAttributes.t("TWO"),
+            requestAttributes.t("THREE"),
+            requestAttributes.t("FOUR"),
+        ];
+        speechText += requestAttributes.t("PLAYER")
+            + " "
+            + playerNumbers[this.getCurrentPlayer().getId()];
+        return speechText;
     }
 
     public questionToSpeechText(requestAttributes: any): string {
