@@ -41,6 +41,10 @@ export class Question {
         return requestAttributes.t("WHAT_IS") + unitSystem + unit + itemToGuess + "?";
     }
 
+    public getHash(): string {
+        return this.itemToGuess + this.unitSystem + this.unit + this.numberToGuess;
+    }
+
     public copy(question: Question): void {
         this.itemToGuess = question.itemToGuess;
         this.numberToGuess = question.numberToGuess;
