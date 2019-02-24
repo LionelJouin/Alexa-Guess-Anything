@@ -50,7 +50,6 @@ export class Game {
     }
 
     private guess(n: number): number {
-        // todo: throw error if n in NaN
         const result = this.currentQuestion.guess(n);
 
         if (result != 0) {
@@ -70,7 +69,7 @@ export class Game {
     }
 
     public guessToSpeechText(n: number, requestAttributes: any): string {
-        if (n === NaN || n === undefined || n === null)
+        if (isNaN(n) || n === undefined || n === null)
             return "Erreur";
 
         var speechText: string = "";
@@ -78,8 +77,12 @@ export class Game {
 
         if (guessResult < 0) {
             speechText += requestAttributes.t("MORE");
+            if (this.getPlayerCount() > 1)
+                speechText += " " + this.currentPlayerToSpeechText(requestAttributes);
         } else if (guessResult > 0) {
             speechText += requestAttributes.t("LESS");
+            if (this.getPlayerCount() > 1)
+                speechText += " " + this.currentPlayerToSpeechText(requestAttributes);
         } else {
             speechText += requestAttributes.t("GOOD");
             if (this.isFinished()) {
@@ -90,7 +93,7 @@ export class Game {
             } else {
                 speechText += " " + requestAttributes.t("NEXT_QUESTION") + " ";
                 if (this.getPlayerCount() > 1)
-                    speechText += this.currentPlayerToSpeechText(requestAttributes) + ",";
+                    speechText += this.currentPlayerToSpeechText(requestAttributes) + ", ";
                 speechText += this.questionToSpeechText(requestAttributes);
             }
         }
@@ -149,7 +152,7 @@ export class Game {
             return requestAttributes.t("POINTS");
     }
 
-    private currentPlayerToSpeechText(requestAttributes: any) {
+    private currentPlayerToSpeechText(requestAttributes: any): string {
         var speechText = "";
         var playerNumbers: string[] = [
             requestAttributes.t("ONE"),
