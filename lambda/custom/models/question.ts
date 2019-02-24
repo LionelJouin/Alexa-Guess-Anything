@@ -47,6 +47,8 @@ export class Question {
 
     public copy(question: Question): void {
         this.itemToGuess = question.itemToGuess;
+        this.unitSystem = question.unitSystem;
+        this.unit = question.unit;
         this.numberToGuess = question.numberToGuess;
     }
 
