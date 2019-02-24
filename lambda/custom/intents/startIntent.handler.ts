@@ -1,5 +1,5 @@
 import { HandlerInput, RequestHandler } from "ask-sdk-core";
-import { Response } from "ask-sdk-model";
+import { Response, IntentRequest } from "ask-sdk-model";
 import { Game } from "../models/game";
 
 export class StartIntentHandler implements RequestHandler {
@@ -13,12 +13,17 @@ export class StartIntentHandler implements RequestHandler {
     public handle(handlerInput: HandlerInput): Response {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
         const SessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        const request = handlerInput.requestEnvelope.request as IntentRequest;
 
-        SessionAttributes.game = new Game();
+        var playerCount: number = 1;
+        if (request.intent.slots!.playerCount.value)
+            playerCount = +request.intent.slots!.playerCount.value;
+
+        SessionAttributes.game = new Game(playerCount);
         const game: Game = SessionAttributes.game as Game;
-        
+
         const speechText = game.questionToSpeechText(requestAttributes);
-        
+
         return handlerInput.responseBuilder
             .speak(speechText)
             .reprompt(speechText)

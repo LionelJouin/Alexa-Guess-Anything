@@ -16,7 +16,11 @@ export class AnswerIntentHandler implements RequestHandler {
         const request = handlerInput.requestEnvelope.request as IntentRequest;
 
         var answer: number = +request.intent.slots!.answer.value;
-        const game: Game = new Game();
+
+        var playerCount: number = SessionAttributes.game.players.length;
+        var roundCount: number = SessionAttributes.game.numberOfRound;
+
+        const game: Game = new Game(playerCount, roundCount);
         game.copy(SessionAttributes.game as Game);
         SessionAttributes.game = game;
         

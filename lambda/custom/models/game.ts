@@ -14,8 +14,9 @@ export class Game {
         this.previousQuestions = new Array();
 
         this.players = new Array(numberOfPlayer);
-        for (var i = 0; i < numberOfPlayer; i++)
+        for (var i = 0; i < numberOfPlayer; i++) {
             this.players[i] = new Player(i);
+        }
 
         this.currentPlayerIndex = 0;
 
@@ -49,6 +50,7 @@ export class Game {
     }
 
     private guess(n: number): number {
+        // todo: throw error if n in NaN
         const result = this.currentQuestion.guess(n);
 
         if (result != 0) {
@@ -74,23 +76,22 @@ export class Game {
         var speechText: string = "";
         const guessResult: number = this.guess(n);
 
-        if (guessResult < 0)
+        if (guessResult < 0) {
             speechText += requestAttributes.t("MORE");
-        else if (guessResult > 0)
+        } else if (guessResult > 0) {
             speechText += requestAttributes.t("LESS");
-        else {
+        } else {
             speechText += requestAttributes.t("GOOD");
             if (this.isFinished()) {
                 speechText += " "
                     + requestAttributes.t("IT_S_FINISHED")
                     + " "
                     + this.resultToSpeechText(requestAttributes);
-            }
-            else {
-                speechText += " " + requestAttributes.t("NEXT_QUESTION");
+            } else {
+                speechText += " " + requestAttributes.t("NEXT_QUESTION") + " ";
                 if (this.getPlayerCount() > 1)
                     speechText += this.currentPlayerToSpeechText(requestAttributes) + ",";
-                speechText += " " + this.questionToSpeechText(requestAttributes);
+                speechText += this.questionToSpeechText(requestAttributes);
             }
         }
 
