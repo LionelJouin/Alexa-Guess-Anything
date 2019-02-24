@@ -34,8 +34,16 @@
                 },
                 {
                     "name": "StartIntent",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "playerCount",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
                     "samples": [
+                        "Commencer la partie à {playerCount}",
+                        "Commencer le quiz à {playerCount}",
+                        "Commencer à {playerCount}",
                         "Commencer le quiz",
                         "Commencer la partie",
                         "Commencer"
@@ -43,6 +51,48 @@
                 }
             ],
             "types": []
-        }
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "StartIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "playerCount",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {},
+                            "validations": [
+                                {
+                                    "type": "isInSet",
+                                    "prompt": "Slot.Validation.190394387501.772058443673.243446246525",
+                                    "values": [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Slot.Validation.190394387501.772058443673.243446246525",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Le nombre de joueurs doit être compris entre un et quatre."
+                    }
+                ]
+            }
+        ]
     }
 }
