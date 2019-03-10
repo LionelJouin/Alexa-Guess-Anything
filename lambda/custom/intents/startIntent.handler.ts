@@ -1,6 +1,7 @@
 import { HandlerInput, RequestHandler } from "ask-sdk-core";
 import { Response, IntentRequest } from "ask-sdk-model";
 import { Game } from "../models/game";
+import { State } from "../models/state.enum";
 
 export class StartIntentHandler implements RequestHandler {
 
@@ -21,6 +22,8 @@ export class StartIntentHandler implements RequestHandler {
 
         SessionAttributes.game = new Game(playerCount);
         const game: Game = SessionAttributes.game as Game;
+
+        SessionAttributes.state = State.INGAME;
 
         const speechText = game.questionToSpeechText(requestAttributes);
 

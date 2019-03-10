@@ -70,7 +70,7 @@ export class Game {
 
     public guessToSpeechText(n: number, requestAttributes: any): string {
         if (isNaN(n) || n === undefined || n === null)
-            return "Erreur";
+            throw new Error('Guess number is null');
 
         var speechText: string = "";
         const guessResult: number = this.guess(n);

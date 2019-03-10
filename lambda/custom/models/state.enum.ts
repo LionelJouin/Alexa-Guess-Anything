@@ -1,4 +1,4 @@
-enum Direction {
+export enum State {
     MENU,
     INGAME
 }
