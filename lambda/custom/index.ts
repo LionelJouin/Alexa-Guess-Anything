@@ -15,7 +15,8 @@ export const handler = Alexa.SkillBuilders.custom()
     )
     .addErrorHandlers(
         new Errors.Unknown(),
-        new Errors.Unexpected()
+        new Errors.WrongState(),
+        new Errors.NullNumber()
     )
     .addRequestInterceptors(
         new Interceptors.Localization()

@@ -1,5 +1,6 @@
 import { Question } from "./question";
 import { Player } from "./player";
+import { ErrorTypes } from "../errors/ErrorTypes";
 
 export class Game {
 
@@ -64,13 +65,16 @@ export class Game {
         return 0;
     }
 
-    private isFinished(): boolean {
+    public isFinished(): boolean {
         return this.numberOfRound <= 0;
     }
 
     public guessToSpeechText(n: number, requestAttributes: any): string {
-        if (isNaN(n) || n === undefined || n === null)
-            throw new Error('Guess number is null');
+        if (isNaN(n) || n === undefined || n === null) {
+            let error = new Error('Guess number is null');
+            error.name = ErrorTypes.WRONG_STATE;
+            throw error;
+        }
 
         var speechText: string = "";
         const guessResult: number = this.guess(n);

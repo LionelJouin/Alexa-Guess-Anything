@@ -25,6 +25,7 @@ export const fr_FR = {
         FIRST: "première",
         SECOND: "deuxième",
         THIRD: "troisième",
-        FOURTH: "quatrième"
+        FOURTH: "quatrième",
+        I_DID_NOT_UNDERSTAND: "Je n'ai pas compris !",
     }
 }

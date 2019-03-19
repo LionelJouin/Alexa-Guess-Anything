@@ -1,2 +1,3 @@
 export * from "./unknown";
-export * from "./unexpected";
+export * from "./WrongState";
+export * from "./NullNumber";

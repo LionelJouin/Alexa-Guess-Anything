@@ -2,20 +2,18 @@ import { ErrorHandler, HandlerInput } from "ask-sdk-core";
 import { Response, IntentRequest } from "ask-sdk-model";
 import { ErrorTypes } from "./ErrorTypes";
 
-export class Unknown implements ErrorHandler {
+export class NullNumber implements ErrorHandler {
 
     public canHandle(_: HandlerInput, error: Error): boolean {
-        return error.name !== ErrorTypes.WRONG_STATE && error.name !== ErrorTypes.NULL_NUMBER;
+        return error.name === ErrorTypes.NULL_NUMBER;
     }
 
     public handle(handlerInput: HandlerInput, error: Error): Response {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
         const SessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         const request = handlerInput.requestEnvelope.request as IntentRequest;
-
-        console.log(error);
-
-        const speechText = requestAttributes.t("I_DID_NOT_UNDERSTAND");
+        
+        const speechText = requestAttributes.t("I_DID_NOT_UNDERSTAND") + " ";
 
         return handlerInput.responseBuilder
             .speak(speechText)
