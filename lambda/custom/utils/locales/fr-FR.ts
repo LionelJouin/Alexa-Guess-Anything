@@ -1,6 +1,8 @@
 export const fr_FR = {
     translation: {
-        WELCOME_MESSAGE: "Bienvenue sur Guess Anything, Vous pouvez me demander de lancer un quiz.",
+        WELCOME_MESSAGE: "Bienvenue sur Guess Anything.",
+        WHAT_DO_YOU_WANT: "Que voulez vous faire ? Vous pouvez me demander de lancer un quiz",
+        I_DID_NOT_UNDERSTAND: "Je n'ai pas compris !",
         EXIT: "Exit",
         HELP: "Help",
         WHAT_IS: "Quel est",
@@ -26,6 +28,5 @@ export const fr_FR = {
         SECOND: "deuxième",
         THIRD: "troisième",
         FOURTH: "quatrième",
-        I_DID_NOT_UNDERSTAND: "Je n'ai pas compris !",
     }
 }

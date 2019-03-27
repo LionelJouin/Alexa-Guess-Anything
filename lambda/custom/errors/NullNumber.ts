@@ -1,6 +1,7 @@
 import { ErrorHandler, HandlerInput } from "ask-sdk-core";
 import { Response, IntentRequest } from "ask-sdk-model";
 import { ErrorTypes } from "./ErrorTypes";
+import { Game } from "../models/game";
 
 export class NullNumber implements ErrorHandler {
 
@@ -13,7 +14,16 @@ export class NullNumber implements ErrorHandler {
         const SessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         const request = handlerInput.requestEnvelope.request as IntentRequest;
         
-        const speechText = requestAttributes.t("I_DID_NOT_UNDERSTAND") + " ";
+        let speechText = requestAttributes.t("I_DID_NOT_UNDERSTAND") + " ";
+        
+        var playerCount: number = SessionAttributes.game.players.length;
+        var roundCount: number = SessionAttributes.game.numberOfRound;
+
+        const game: Game = new Game(playerCount, roundCount);
+        game.copy(SessionAttributes.game as Game);
+        SessionAttributes.game = game;
+
+        speechText += game.questionToSpeechText(requestAttributes);
 
         return handlerInput.responseBuilder
             .speak(speechText)

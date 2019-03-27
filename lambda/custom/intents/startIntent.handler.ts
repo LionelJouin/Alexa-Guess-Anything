@@ -2,6 +2,7 @@ import { HandlerInput, RequestHandler } from "ask-sdk-core";
 import { Response, IntentRequest } from "ask-sdk-model";
 import { Game } from "../models/game";
 import { State } from "../models/state.enum";
+import { ErrorTypes } from "../errors/ErrorTypes";
 
 export class StartIntentHandler implements RequestHandler {
 
@@ -15,6 +16,12 @@ export class StartIntentHandler implements RequestHandler {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
         const SessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         const request = handlerInput.requestEnvelope.request as IntentRequest;
+
+        if (SessionAttributes.state === State.INGAME) {
+            let error = new Error('State in game');
+            error.name = ErrorTypes.WRONG_STATE;
+            throw error;
+        }
 
         var playerCount: number = 1;
         if (request.intent.slots!.playerCount.value)

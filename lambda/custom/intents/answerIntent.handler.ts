@@ -17,7 +17,7 @@ export class AnswerIntentHandler implements RequestHandler {
         const SessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         const request = handlerInput.requestEnvelope.request as IntentRequest;
 
-        if (SessionAttributes.state === State.INGAME) {
+        if (SessionAttributes.state === State.MENU) {
             let error = new Error('State in menu');
             error.name = ErrorTypes.WRONG_STATE;
             throw error;

@@ -13,7 +13,8 @@ export class LaunchRequestHandler implements RequestHandler {
     public handle(handlerInput: HandlerInput): Response {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
         const SessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-        const speechText = requestAttributes.t("WELCOME_MESSAGE");
+
+        const speechText = requestAttributes.t("WELCOME_MESSAGE") + " " + requestAttributes.t("WHAT_DO_YOU_WANT");
 
         if (SessionAttributes.state === State.INGAME) {
             let error = new Error('State in game');
