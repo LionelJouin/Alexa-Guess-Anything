@@ -1,5 +1,25 @@
 # Alexa-Guess-Anything
 
+## Install Dependencies
+
+```
+cd lambda
+npm install
+```
+
+## Build
+
+```
+npm build
+```
+
+## Testing
+
+```
+npm test
+```
+
+## Deployment
 
 ## Authors
 
