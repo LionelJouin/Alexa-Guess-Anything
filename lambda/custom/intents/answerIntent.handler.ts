@@ -23,7 +23,7 @@ export class AnswerIntentHandler implements RequestHandler {
             throw error;
         }
 
-        var answer: number = +request.intent.slots!.answer.value;
+        var answer: number = +request.intent.slots!.answer.value!;
 
         var playerCount: number = SessionAttributes.game.players.length;
         var roundCount: number = SessionAttributes.game.numberOfRound;

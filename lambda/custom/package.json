@@ -4,19 +4,19 @@
   "description": "AWS Lambda function, Alexa skill: Alexa-Guess-Anything",
   "main": "index.js",
   "dependencies": {
-    "ask-sdk-core": "^2.0.0",
-    "ask-sdk-model": "^1.0.0",
-    "i18next": "^13.1.2",
+    "ask-sdk-core": "^2.7.0",
+    "ask-sdk-model": "^1.23.1",
+    "i18next": "^13.1.5",
     "i18next-sprintf-postprocessor": "^0.2.2"
   },
   "devDependencies": {
     "@types/i18next": "^12.1.0",
     "@types/i18next-sprintf-postprocessor": "0.0.29",
-    "@types/node": "^10.12.18",
-    "gulp": "^4.0.0",
-    "gulp-typescript": "^5.0.0",
-    "rimraf": "^2.6.3",
-    "typescript": "^3.2.2"
+    "@types/node": "^10.17.4",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^5.0.1",
+    "rimraf": "^2.7.1",
+    "typescript": "^3.7.2"
   },
   "scripts": {
     "build": "gulp",
