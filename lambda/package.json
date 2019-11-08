@@ -1,5 +1,5 @@
 {
-  "name": "Alexa-Guess-Anything",
+  "name": "alexa-guess-anything",
   "version": "1.0.0",
   "description": "AWS Lambda function, Alexa skill: Alexa-Guess-Anything",
   "main": "index.js",
