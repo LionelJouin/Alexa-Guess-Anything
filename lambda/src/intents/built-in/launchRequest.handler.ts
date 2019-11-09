@@ -2,6 +2,8 @@ import { HandlerInput, RequestHandler } from "ask-sdk-core";
 import { Response } from "ask-sdk-model";
 import { State } from "../../models/state.enum";
 import { ErrorTypes } from "../../errors/ErrorTypes";
+import { SpeechLocal } from "../../utils/SpeechLocal";
+import { stringFormat } from "../../utils/stringFormat";
 
 export class LaunchRequestHandler implements RequestHandler {
 
@@ -13,8 +15,8 @@ export class LaunchRequestHandler implements RequestHandler {
     public handle(handlerInput: HandlerInput): Response {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
         const SessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-
-        const speechText = requestAttributes.t("WELCOME_MESSAGE") + " " + requestAttributes.t("WHAT_DO_YOU_WANT");
+        const speechLocal = SpeechLocal.getInstance(requestAttributes);
+        const speechOutput = stringFormat("{0} {1}", speechLocal.getSpeechOutput("WELCOME_MESSAGE"), speechLocal.getSpeechOutput("WHAT_DO_YOU_WANT"));
 
         if (SessionAttributes.state === State.INGAME) {
             let error = new Error('State in game');
@@ -25,9 +27,9 @@ export class LaunchRequestHandler implements RequestHandler {
         SessionAttributes.state = State.MENU;
 
         return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(speechText)
-            .withSimpleCard(speechText, speechText)
+            .speak(speechOutput)
+            .reprompt(speechOutput)
+            .withSimpleCard(speechOutput, speechOutput)
             .getResponse();
     }
 

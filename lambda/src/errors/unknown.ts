@@ -1,6 +1,7 @@
 import { ErrorHandler, HandlerInput } from "ask-sdk-core";
 import { Response, IntentRequest } from "ask-sdk-model";
 import { ErrorTypes } from "./ErrorTypes";
+import { SpeechLocal } from "../utils/SpeechLocal";
 
 export class Unknown implements ErrorHandler {
 
@@ -12,15 +13,14 @@ export class Unknown implements ErrorHandler {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
         const SessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         const request = handlerInput.requestEnvelope.request as IntentRequest;
+        const speechLocal = SpeechLocal.getInstance(requestAttributes);
 
-        console.log(error);
-
-        const speechText = requestAttributes.t("I_DID_NOT_UNDERSTAND");
+        const speechOutput = speechLocal.getSpeechOutput("I_DID_NOT_UNDERSTAND");
 
         return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(speechText)
-            .withSimpleCard(speechText, speechText)
+            .speak(speechOutput)
+            .reprompt(speechOutput)
+            .withSimpleCard(speechOutput, speechOutput)
             .getResponse();
     }
 

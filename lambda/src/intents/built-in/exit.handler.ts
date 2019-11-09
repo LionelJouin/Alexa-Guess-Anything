@@ -1,5 +1,6 @@
 import { HandlerInput, RequestHandler } from "ask-sdk-core";
 import { Response } from "ask-sdk-model";
+import { SpeechLocal } from "../../utils/SpeechLocal";
 
 export class ExitIntentHandler implements RequestHandler {
 
@@ -11,10 +12,11 @@ export class ExitIntentHandler implements RequestHandler {
 
     public handle(handlerInput: HandlerInput): Response {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
-        const speechText = requestAttributes.t("EXIT");
+        const speechLocal = SpeechLocal.getInstance(requestAttributes);
+        const speechOutput = speechLocal.getSpeechOutput("EXIT");
 
         return handlerInput.responseBuilder
-            .speak(speechText)
+            .speak(speechOutput)
             .getResponse();
     }
 

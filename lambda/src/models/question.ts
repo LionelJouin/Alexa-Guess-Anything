@@ -1,5 +1,6 @@
 import { Result } from "./result.enum";
-import * as questions from "../utils/questions"
+import questions from "../utils/questions";
+import { SpeechLocal } from "../utils/SpeechLocal";
 
 export class Question {
 
@@ -17,9 +18,9 @@ export class Question {
     }
 
     private generate(): any {
-        const max: number = questions.questions["fr-FR"].length;
+        const max: number = questions(SpeechLocal.getLanguage()).length;
         const randomNumber: number = Math.floor(Math.random() * max);
-        return questions.questions["fr-FR"][randomNumber];
+        return questions(SpeechLocal.getLanguage())[randomNumber];
     }
 
     public guess(n: number): Result {
@@ -31,7 +32,7 @@ export class Question {
         return Result.EQUAL;
     }
 
-    public toSpeechText(requestAttributes: any): string {
+    public getSpeechOutput(): string {
         var unitSystem: string = "";
         if (this.unitSystem !== undefined && this.unitSystem !== "")
             unitSystem = " " + this.unitSystem;
@@ -44,7 +45,7 @@ export class Question {
         if (this.itemToGuess !== undefined)
             itemToGuess = " " + this.itemToGuess;
 
-        return requestAttributes.t("WHAT_IS") + unitSystem + unit + itemToGuess + "?";
+        return SpeechLocal.getSpeechOutput("WHAT_IS") + unitSystem + unit + itemToGuess + "?";
     }
 
     public getHash(): string {

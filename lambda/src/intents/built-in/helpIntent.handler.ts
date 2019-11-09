@@ -1,5 +1,6 @@
 import { HandlerInput, RequestHandler } from "ask-sdk-core";
 import { Response } from "ask-sdk-model";
+import { SpeechLocal } from "../../utils/SpeechLocal";
 
 export class HelpIntentHandler implements RequestHandler {
 
@@ -11,12 +12,13 @@ export class HelpIntentHandler implements RequestHandler {
 
     public handle(handlerInput: HandlerInput): Response {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
-        const speechText = requestAttributes.t("HELP");
+        const speechLocal = SpeechLocal.getInstance(requestAttributes);
+        const speechOutput = speechLocal.getSpeechOutput("HELP");
 
         return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(speechText)
-            .withSimpleCard(speechText, speechText)
+            .speak(speechOutput)
+            .reprompt(speechOutput)
+            .withSimpleCard(speechOutput, speechOutput)
             .getResponse();
     }
 

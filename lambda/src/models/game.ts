@@ -2,7 +2,8 @@ import { Question } from "./question";
 import { Player } from "./player";
 import { Result } from "./result.enum";
 import { ErrorTypes } from "../errors/ErrorTypes";
-import { stringFormat } from "../utils/stringFormat"
+import { stringFormat } from "../utils/stringFormat";
+import { SpeechLocal } from "../utils/SpeechLocal";
 
 export class Game {
 
@@ -26,11 +27,11 @@ export class Game {
         this.setNewQuestion();
     }
 
-    public questionToSpeechText(requestAttributes: any): string {
-        return this.currentQuestion.toSpeechText(requestAttributes);
+    public questionSpeechOutput(): string {
+        return this.currentQuestion.getSpeechOutput();
     }
 
-    public guessToSpeechText(n: number, requestAttributes: any): string {
+    public guessSpeechOutput(n: number): string {
         if (isNaN(n) || n === undefined || n === null) {
             let error = new Error('Guess number is null');
             error.name = ErrorTypes.WRONG_STATE;
@@ -42,17 +43,17 @@ export class Game {
 
         switch (guessResult) {
             case Result.MORE:
-                speechOutput = stringFormat("{0}, {1}", requestAttributes.t("MORE"), this.nextPlayerToSpeechOutput())
+                speechOutput = stringFormat("{0}, {1}", SpeechLocal.getSpeechOutput("MORE"), this.nextPlayerSpeechOutput())
                 break;
             case Result.LESS:
-                speechOutput = stringFormat("{0}, {1}", requestAttributes.t("LESS"), this.nextPlayerToSpeechOutput())
+                speechOutput = stringFormat("{0}, {1}", SpeechLocal.getSpeechOutput("LESS"), this.nextPlayerSpeechOutput())
                 break;
             default:
-                speechOutput = requestAttributes.t("GOOD");
+                speechOutput = SpeechLocal.getSpeechOutput("GOOD");
                 if (this.isFinished()) {
-                    speechOutput = stringFormat("{0} {1} {2}", speechOutput, requestAttributes.t("IT_S_FINISHED"), this.resultToSpeechText(requestAttributes));
+                    speechOutput = stringFormat("{0} {1} {2}", speechOutput, SpeechLocal.getSpeechOutput("IT_S_FINISHED"), this.resultSpeechOutput());
                 } else {
-                    speechOutput = stringFormat("{0} {1} {2}", speechOutput, requestAttributes.t("NEXT_QUESTION"), this.questionToSpeechText(requestAttributes));
+                    speechOutput = stringFormat("{0} {1} {2}", speechOutput, SpeechLocal.getSpeechOutput("NEXT_QUESTION"), this.questionSpeechOutput());
                 }
         }
 
@@ -116,48 +117,48 @@ export class Game {
 
     // #region SpeechOutput  
 
-    private resultToSpeechText(requestAttributes: any): string {
+    private resultSpeechOutput(): string {
         var speechOutput: string = "";
 
         if (this.getPlayerCount() <= 1) {
-            speechOutput = requestAttributes.t("YOU_SCORED_X_POINTS", this.getCurrentPlayer().getPointCount());
+            speechOutput = SpeechLocal.getSpeechOutput("YOU_SCORED_X_POINTS", String(this.getCurrentPlayer().getPointCount()));
         } else {
             var playerNumbers: string[] = [
-                requestAttributes.t("ONE"),
-                requestAttributes.t("TWO"),
-                requestAttributes.t("THREE"),
-                requestAttributes.t("FOUR"),
+                SpeechLocal.getSpeechOutput("ONE"),
+                SpeechLocal.getSpeechOutput("TWO"),
+                SpeechLocal.getSpeechOutput("THREE"),
+                SpeechLocal.getSpeechOutput("FOUR"),
             ];
             var playerPositions: string[] = [
-                requestAttributes.t("FIRST"),
-                requestAttributes.t("SECOND"),
-                requestAttributes.t("THIRD"),
-                requestAttributes.t("FOURTH"),
+                SpeechLocal.getSpeechOutput("FIRST"),
+                SpeechLocal.getSpeechOutput("SECOND"),
+                SpeechLocal.getSpeechOutput("THIRD"),
+                SpeechLocal.getSpeechOutput("FOURTH"),
             ];
             this.players.sort((x, y) => x.getPointCount() - y.getPointCount());
             for (var i = 0; i < this.getPlayerCount(); i++) {
-                speechOutput =  stringFormat("{0}. {1}", speechOutput, requestAttributes.t("RESULT", playerNumbers[i], playerPositions[i]))
+                speechOutput =  stringFormat("{0}. {1}", speechOutput, SpeechLocal.getSpeechOutput("RESULT", playerNumbers[i], playerPositions[i]))
             }
         }
 
         return speechOutput;
     }
 
-    private nextPlayerToSpeechOutput(): string {
+    private nextPlayerSpeechOutput(): string {
         if (this.getPlayerCount() <= 0)
             return "";
-        return this.currentPlayerToSpeechText();
+        return this.currentPlayerSpeechOutput();
     }
 
-    private currentPlayerToSpeechText(requestAttributes: any): string {
+    private currentPlayerSpeechOutput(): string {
         var speechText = "";
         var playerNumbers: string[] = [
-            requestAttributes.t("ONE"),
-            requestAttributes.t("TWO"),
-            requestAttributes.t("THREE"),
-            requestAttributes.t("FOUR"),
+            SpeechLocal.getSpeechOutput("ONE"),
+            SpeechLocal.getSpeechOutput("TWO"),
+            SpeechLocal.getSpeechOutput("THREE"),
+            SpeechLocal.getSpeechOutput("FOUR"),
         ];
-        speechText = stringFormat(requestAttributes.t("PLAYER"), " ", playerNumbers[this.getCurrentPlayer().getId()])
+        speechText = stringFormat(SpeechLocal.getSpeechOutput("PLAYER"), " ", playerNumbers[this.getCurrentPlayer().getId()])
         return speechText;
     }
 

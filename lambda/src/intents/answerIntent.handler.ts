@@ -3,6 +3,7 @@ import { Response, IntentRequest } from "ask-sdk-model";
 import { Game } from "../models/game";
 import { State } from "../models/state.enum";
 import { ErrorTypes } from "../errors/ErrorTypes";
+import { SpeechLocal } from "../utils/SpeechLocal";
 
 export class AnswerIntentHandler implements RequestHandler {
 
@@ -16,6 +17,7 @@ export class AnswerIntentHandler implements RequestHandler {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
         const SessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         const request = handlerInput.requestEnvelope.request as IntentRequest;
+        const speechLocal = SpeechLocal.getInstance(requestAttributes);
 
         if (SessionAttributes.state === State.MENU) {
             let error = new Error('State in menu');
@@ -32,7 +34,7 @@ export class AnswerIntentHandler implements RequestHandler {
         game.copy(SessionAttributes.game as Game);
         SessionAttributes.game = game;
 
-        const speechText = game.guessToSpeechText(answer, requestAttributes);
+        const speechText = game.guessSpeechOutput(answer);
 
         if (game.isFinished())
             SessionAttributes.state = State.MENU;

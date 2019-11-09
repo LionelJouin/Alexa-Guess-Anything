@@ -2,6 +2,8 @@ import { ErrorHandler, HandlerInput } from "ask-sdk-core";
 import { Response, IntentRequest } from "ask-sdk-model";
 import { ErrorTypes } from "./ErrorTypes";
 import { Game } from "../models/game";
+import { SpeechLocal } from "../utils/SpeechLocal";
+import { stringFormat } from "../utils/stringFormat";
 
 export class NullNumber implements ErrorHandler {
 
@@ -13,8 +15,7 @@ export class NullNumber implements ErrorHandler {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
         const SessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         const request = handlerInput.requestEnvelope.request as IntentRequest;
-        
-        let speechText = requestAttributes.t("I_DID_NOT_UNDERSTAND") + " ";
+        const speechLocal = SpeechLocal.getInstance(requestAttributes);
         
         var playerCount: number = SessionAttributes.game.players.length;
         var roundCount: number = SessionAttributes.game.numberOfRound;
@@ -23,12 +24,12 @@ export class NullNumber implements ErrorHandler {
         game.copy(SessionAttributes.game as Game);
         SessionAttributes.game = game;
 
-        speechText += game.questionToSpeechText(requestAttributes);
+        let speechOutput = stringFormat("{0} {1}", speechLocal.getSpeechOutput("I_DID_NOT_UNDERSTAND"), game.questionSpeechOutput());
 
         return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(speechText)
-            .withSimpleCard(speechText, speechText)
+            .speak(speechOutput)
+            .reprompt(speechOutput)
+            .withSimpleCard(speechOutput, speechOutput)
             .getResponse();
     }
 
