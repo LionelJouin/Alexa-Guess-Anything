@@ -3,6 +3,8 @@ export const fr_FR = {
         WELCOME_MESSAGE: "Bienvenue sur Guess Anything.",
         WHAT_DO_YOU_WANT: "Que voulez vous faire ? Vous pouvez me demander de lancer un quiz",
         I_DID_NOT_UNDERSTAND: "Je n'ai pas compris !",
+        YOU_SCORED_X_POINTS: "Vous avez fait %s points.",
+        RESULT: "Joueur %s est %s avec %s points",
         EXIT: "Exit",
         HELP: "Help",
         WHAT_IS: "Quel est",

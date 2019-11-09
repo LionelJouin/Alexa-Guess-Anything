@@ -1,3 +1,4 @@
+import { Result } from "./result.enum";
 import * as questions from "../utils/questions"
 
 export class Question {
@@ -21,8 +22,13 @@ export class Question {
         return questions.questions["fr-FR"][randomNumber];
     }
 
-    public guess(n: number): number {
-        return n - this.numberToGuess;
+    public guess(n: number): Result {
+        const res = n - this.numberToGuess
+        if (res < 0)
+            Result.MORE;
+        else if (res > 0)
+            return Result.LESS;
+        return Result.EQUAL;
     }
 
     public toSpeechText(requestAttributes: any): string {
