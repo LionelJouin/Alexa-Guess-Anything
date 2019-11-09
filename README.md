@@ -1,5 +1,9 @@
 # Alexa-Guess-Anything
 
+
+[![Build](https://img.shields.io/travis/LionelJouin/Alexa-Guess-Anything)](https://travis-ci.com/LionelJouin/Alexa-Guess-Anything)
+[![Requirements Status](https://img.shields.io/requires/github/LionelJouin/Alexa-Guess-Anything)](https://requires.io/github/LionelJouin/Alexa-Guess-Anything/requirements/?branch=master)
+
 ## Install Dependencies
 
 ```
