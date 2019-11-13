@@ -14,17 +14,17 @@ export class LaunchRequestHandler implements RequestHandler {
 
     public handle(handlerInput: HandlerInput): Response {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
-        const SessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         const speechLocal = SpeechLocal.getInstance(requestAttributes);
         const speechOutput = stringFormat("{0} {1}", speechLocal.getSpeechOutput("WELCOME_MESSAGE"), speechLocal.getSpeechOutput("WHAT_DO_YOU_WANT"));
 
-        if (SessionAttributes.state === State.INGAME) {
+        if (sessionAttributes.state === State.INGAME) {
             let error = new Error('State in game');
             error.name = ErrorTypes.WRONG_STATE;
             throw error;
         }
 
-        SessionAttributes.state = State.MENU;
+        sessionAttributes.state = State.MENU;
 
         return handlerInput.responseBuilder
             .speak(speechOutput)

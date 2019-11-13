@@ -15,11 +15,11 @@ export class StartIntentHandler implements RequestHandler {
 
     public handle(handlerInput: HandlerInput): Response {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
-        const SessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         const request = handlerInput.requestEnvelope.request as IntentRequest;
         const speechLocal = SpeechLocal.getInstance(requestAttributes);
 
-        if (SessionAttributes.state === State.INGAME) {
+        if (sessionAttributes.state === State.INGAME) {
             let error = new Error('State in game');
             error.name = ErrorTypes.WRONG_STATE;
             throw error;
@@ -29,10 +29,10 @@ export class StartIntentHandler implements RequestHandler {
         if (request.intent.slots!.playerCount.value)
             playerCount = +request.intent.slots!.playerCount.value;
 
-        SessionAttributes.game = new Game(playerCount);
-        const game: Game = SessionAttributes.game as Game;
+        sessionAttributes.game = new Game(playerCount);
+        const game: Game = sessionAttributes.game as Game;
 
-        SessionAttributes.state = State.INGAME;
+        sessionAttributes.state = State.INGAME;
 
         const speechText = game.questionSpeechOutput();
 

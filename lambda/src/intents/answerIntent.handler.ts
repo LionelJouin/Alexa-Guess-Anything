@@ -15,11 +15,11 @@ export class AnswerIntentHandler implements RequestHandler {
 
     public handle(handlerInput: HandlerInput): Response {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
-        const SessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         const request = handlerInput.requestEnvelope.request as IntentRequest;
         const speechLocal = SpeechLocal.getInstance(requestAttributes);
 
-        if (SessionAttributes.state === State.MENU) {
+        if (sessionAttributes.state === State.MENU) {
             let error = new Error('State in menu');
             error.name = ErrorTypes.WRONG_STATE;
             throw error;
@@ -27,17 +27,17 @@ export class AnswerIntentHandler implements RequestHandler {
 
         var answer: number = +request.intent.slots!.answer.value!;
 
-        var playerCount: number = SessionAttributes.game.players.length;
-        var roundCount: number = SessionAttributes.game.numberOfRound;
+        var playerCount: number = sessionAttributes.game.players.length;
+        var roundCount: number = sessionAttributes.game.numberOfRound;
 
         const game: Game = new Game(playerCount, roundCount);
-        game.copy(SessionAttributes.game as Game);
-        SessionAttributes.game = game;
+        game.copy(sessionAttributes.game as Game);
+        sessionAttributes.game = game;
 
         const speechText = game.guessSpeechOutput(answer);
 
         if (game.isFinished())
-            SessionAttributes.state = State.MENU;
+            sessionAttributes.state = State.MENU;
 
         return handlerInput.responseBuilder
             .speak(speechText)
