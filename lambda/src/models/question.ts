@@ -1,6 +1,6 @@
 import { Result } from "./result.enum";
 import questions from "../utils/questions";
-import { SpeechLocal } from "../utils/SpeechLocal";
+import { SpeechLocal } from "../utils/speechLocal";
 
 export class Question {
 

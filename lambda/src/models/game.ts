@@ -3,7 +3,7 @@ import { Player } from "./player";
 import { Result } from "./result.enum";
 import { ErrorTypes } from "../errors/ErrorTypes";
 import { stringFormat } from "../utils/stringFormat";
-import { SpeechLocal } from "../utils/SpeechLocal";
+import { SpeechLocal } from "../utils/speechLocal";
 
 export class Game {
 

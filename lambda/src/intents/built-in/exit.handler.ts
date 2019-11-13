@@ -1,6 +1,6 @@
 import { HandlerInput, RequestHandler } from "ask-sdk-core";
 import { Response } from "ask-sdk-model";
-import { SpeechLocal } from "../../utils/SpeechLocal";
+import { SpeechLocal } from "../../utils/speechLocal";
 
 export class ExitIntentHandler implements RequestHandler {
 

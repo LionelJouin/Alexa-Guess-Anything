@@ -1,7 +1,7 @@
 import { ErrorHandler, HandlerInput } from "ask-sdk-core";
 import { Response, IntentRequest } from "ask-sdk-model";
 import { ErrorTypes } from "./ErrorTypes";
-import { SpeechLocal } from "../utils/SpeechLocal";
+import { SpeechLocal } from "../utils/speechLocal";
 
 export class Unknown implements ErrorHandler {
 

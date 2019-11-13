@@ -3,7 +3,7 @@ import { Response, IntentRequest } from "ask-sdk-model";
 import { ErrorTypes } from "./ErrorTypes";
 import { State } from "../models/state.enum";
 import { Game } from "../models/game";
-import { SpeechLocal } from "../utils/SpeechLocal";
+import { SpeechLocal } from "../utils/speechLocal";
 import { stringFormat } from "../utils/stringFormat";
 
 export class WrongState implements ErrorHandler {

@@ -2,7 +2,7 @@ import { HandlerInput, RequestHandler } from "ask-sdk-core";
 import { Response } from "ask-sdk-model";
 import { State } from "../../models/state.enum";
 import { ErrorTypes } from "../../errors/ErrorTypes";
-import { SpeechLocal } from "../../utils/SpeechLocal";
+import { SpeechLocal } from "../../utils/speechLocal";
 import { stringFormat } from "../../utils/stringFormat";
 
 export class LaunchRequestHandler implements RequestHandler {

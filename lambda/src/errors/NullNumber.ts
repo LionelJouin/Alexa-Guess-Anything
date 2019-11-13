@@ -2,7 +2,7 @@ import { ErrorHandler, HandlerInput } from "ask-sdk-core";
 import { Response, IntentRequest } from "ask-sdk-model";
 import { ErrorTypes } from "./ErrorTypes";
 import { Game } from "../models/game";
-import { SpeechLocal } from "../utils/SpeechLocal";
+import { SpeechLocal } from "../utils/speechLocal";
 import { stringFormat } from "../utils/stringFormat";
 
 export class NullNumber implements ErrorHandler {
