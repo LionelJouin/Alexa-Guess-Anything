@@ -4,6 +4,8 @@ import { Result } from "./result.enum";
 import { ErrorTypes } from "../errors/ErrorTypes";
 import { stringFormat } from "../utils/stringFormat";
 import { SpeechLocal } from "../utils/speechLocal";
+import { QuestionService } from "../services/question.service";
+import { JsonQuestionService } from "../services/jsonQuestion.service";
 
 export class Game {
 
@@ -12,8 +14,10 @@ export class Game {
     private currentPlayerIndex: number;
     private currentQuestion!: Question;
     private previousQuestions: string[];
+    private questionService: QuestionService;
 
-    public constructor(numberOfPlayer: number = 1, numberOfRound: number = 2) {
+    public constructor(numberOfPlayer: number = 1, numberOfRound: number = 2, questionService: QuestionService = new JsonQuestionService(SpeechLocal.getLanguage())) {
+        this.questionService = questionService;
         this.numberOfRound = numberOfRound;
         this.previousQuestions = new Array();
 
@@ -77,7 +81,7 @@ export class Game {
     // #region Core
 
     private setNewQuestion(n: number = 0): void {
-        const newQustion = new Question();
+        const newQustion = this.questionService.generateQuestion();
         if (this.previousQuestions.indexOf(newQustion.getHash()) > -1 && n < 10) { // reset question if in previous ones
             this.setNewQuestion(n++);
             return;
