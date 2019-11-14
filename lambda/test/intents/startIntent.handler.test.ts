@@ -1,4 +1,3 @@
-import { Game } from '../../src/models/game';
 import { expect } from 'chai';
 import { ResponseEnvelope } from 'ask-sdk-model';
 import { handler } from '../../src/index';
