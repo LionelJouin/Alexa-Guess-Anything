@@ -13,6 +13,8 @@ export class JsonQuestionService extends QuestionService {
 
     public getQuestion(seed: number | undefined = undefined): Question {
         this.seed = seed;
+        if (this.seed !== undefined)
+            this.seed = Math.abs(this.seed);
         this.generate();
         let question = this.getSpeechOutput();
         return new Question(question, this.numberToGuess);
@@ -22,7 +24,7 @@ export class JsonQuestionService extends QuestionService {
         const max: number = questions(this.getLanguage()).length;
         let randomNumber: number = Math.floor(Math.random() * max);
         if (this.seed !== undefined)
-            randomNumber = Math.floor(this.seed * max);
+            randomNumber = this.seed % max;
 
         let question = questions(SpeechLocal.getLanguage())[randomNumber];
         this.itemToGuess = question.itemToGuess;
