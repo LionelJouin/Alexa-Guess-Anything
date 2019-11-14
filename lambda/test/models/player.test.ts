@@ -1,8 +1,18 @@
 import { Player } from '../../src/models/player';
 import { expect } from 'chai';
+import { handler } from '../../src/index';
+import { intentObject } from '../intents/intentObjects/testingIntent.object';
 import 'mocha';
 
 describe('Player', () => {
+
+    before(() => {
+        return new Promise((resolve, reject) => {
+            handler(intentObject, null, (error, responseEnvelope) => {
+                resolve();
+            });
+        });
+    });
 
     it('Number of mistakes should be 0', () => {
         let player = new Player(0);

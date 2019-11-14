@@ -1,22 +1,25 @@
 import { Game } from '../../src/models/game';
 import { expect } from 'chai';
+import { ResponseEnvelope } from 'ask-sdk-model';
 import { handler } from '../../src/index';
-import { intentObject } from '../intents/intentObjects/testingIntent.object';
+import { intentObject } from './intentObjects/startIntent.object';
 import 'mocha';
 
-describe('Game', () => {
+let skill_response: ResponseEnvelope;
 
+describe('StartIntent', function () {
+
+    // pre-requisites
     before(() => {
         return new Promise((resolve, reject) => {
             handler(intentObject, null, (error, responseEnvelope) => {
+                skill_response = responseEnvelope;
                 resolve();
             });
         });
     });
 
-    it('Game should not be finished', () => {
-        let game = new Game();
-        expect(game.isFinished()).to.equal(false);
+    it('it responses with valid response structure ', () => {
     });
 
 });
