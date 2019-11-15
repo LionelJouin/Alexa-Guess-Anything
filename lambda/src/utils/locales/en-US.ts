@@ -1,0 +1,26 @@
+export const en_US = {
+    translation: {
+        WELCOME_MESSAGE: "Welcome on Guess Anything.",
+        WHAT_DO_YOU_WANT: "What do you want to do? You can ask me to start a quiz",
+        I_DID_NOT_UNDERSTAND: "I did not understand!",
+        YOU_SCORED_X_POINTS: "You scored %s points.",
+        RESULT: "Player %s is %s with %s points",
+        EXIT: "Exit",
+        HELP: "Help",
+        WHAT_IS: "What is",
+        MORE: "It's more!",
+        LESS: "It's less!",
+        GOOD: "Wll done!",
+        NEXT_QUESTION: "Next question !",
+        IT_S_FINISHED: "It's finished!",
+        PLAYER: "Player",
+        ONE: "one",
+        TWO: "two",
+        THREE: "three",
+        FOUR: "four",
+        FIRST: "first",
+        SECOND: "second",
+        THIRD: "third",
+        FOURTH: "fourth",
+    }
+}
